@@ -14,7 +14,13 @@
   "engines": {
     "node": "^14.18.0 || >=16.0.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@types/styled-components": "^5.1.26",
+    "framer-motion": "^7.6.1",
+    "local-devices": "^4.0.0",
+    "react-router-dom": "^6.4.2",
+    "styled-components": "^5.3.6"
+  },
   "devDependencies": {
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
