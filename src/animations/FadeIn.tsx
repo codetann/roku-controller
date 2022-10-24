@@ -11,9 +11,9 @@ const VARIANT = {
 };
 
 const variants = {
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  exit: { opacity: 0 },
+  initial: { opacity: 0, y: 10 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: 10 },
 };
 
 function FadeIn({ children }: Props) {
@@ -23,6 +23,7 @@ function FadeIn({ children }: Props) {
       initial={VARIANT.INITIAL}
       animate={VARIANT.ANIMATE}
       exit={VARIANT.EXIT}
+      transition={{ duration: 0.1 }}
     >
       {children}
     </motion.div>
