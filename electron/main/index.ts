@@ -18,6 +18,7 @@ import { app, BrowserWindow, shell, ipcMain } from "electron";
 import { release } from "os";
 import { join } from "path";
 import "./ipc-main/ipc.devices";
+import "./ipc-main/ipc.roku";
 
 // Disable GPU Acceleration for Windows 7
 if (release().startsWith("6.1")) app.disableHardwareAcceleration();

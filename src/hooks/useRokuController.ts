@@ -1,5 +1,31 @@
 import { useState } from "react";
-import type { KeyCode } from "@/typings";
+import type { DeviceInfo, KeyCode } from "@/typings";
+import axios from "axios";
+import { ipcRenderer } from "electron";
+
+const xmlToJson = (xml: string) => {
+  let info = {};
+  const parser = new DOMParser();
+  const xmlDoc = parser.parseFromString(xml, "text/xml");
+
+  function recursiveParse(node: Element) {
+    if (node.children.length === 0) {
+      info = {
+        ...info,
+        [node.tagName]: node.textContent,
+      };
+    } else {
+      for (let i = 0; i < node.children.length; i++) {
+        const child = node.children[i];
+        recursiveParse(child);
+      }
+    }
+  }
+
+  recursiveParse(xmlDoc.documentElement);
+
+  return info;
+};
 
 function useRokuController() {
   const [ip, setIp] = useState(localStorage.getItem("roku-ip") || "");
@@ -27,10 +53,29 @@ function useRokuController() {
     });
   };
 
+  const getChannels = async () => {
+    const response = await fetch(`${CONFIG.baseUrl}/query/apps`);
+    const data = await response.json();
+    console.log(response);
+    return data;
+  };
+
+  const getDeviceInfo = async () => {
+    ipcRenderer.send("roku:device-info", ip);
+
+    ipcRenderer.on("roku:device-info", (event, arg) => {
+      // console.log(xmlToJson(arg.data));
+      const data: DeviceInfo = xmlToJson(arg.data);
+      console.log(data["has-play-on-roku"]);
+    });
+  };
+
   return {
     getIpAddress,
     setIpAddress,
     sendKey,
+    getChannels,
+    getDeviceInfo,
   };
 }
 
