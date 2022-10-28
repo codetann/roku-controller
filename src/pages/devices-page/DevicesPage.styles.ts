@@ -10,4 +10,13 @@ const DevicesPageWrapper = styled.section`
   gap: 2rem;
 `;
 
-export { DevicesPageWrapper };
+const DevicesList = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  width: 400px;
+`;
+
+export { DevicesPageWrapper, DevicesList };
